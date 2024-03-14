@@ -24,3 +24,6 @@ alex@someinternalhost:~$**
 
 bastion_IP = 62.84.112.140
 someinternalhost_IP = 10.128.0.27
+
+testapp_IP = 130.193.48.211
+testapp_port = 9292
