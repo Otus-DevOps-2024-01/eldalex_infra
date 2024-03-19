@@ -27,3 +27,6 @@ someinternalhost_IP = 10.128.0.27
 
 testapp_IP = 130.193.48.211
 testapp_port = 9292
+
+Скрипты перенесены в каталог config-scripts
+создан каталог packer с описанием образа и скриптами подготовки.
