@@ -2,7 +2,7 @@
   "builders": [
     {
       "type": "yandex",
-      "service_account_key_file": "C:\\YC\\key.json",
+      "service_account_key_file": "keys/key.json",
       "folder_id": "b1gtl4s8tvhsranled37",
       "source_image_family": "ubuntu-1604-lts",
       "image_name": "reddit-base-ruby-{{timestamp}}",
