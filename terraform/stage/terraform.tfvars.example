@@ -6,4 +6,3 @@ image_id                 = "xxxxxxxxxxxxxxxxxxxx"
 subnet_id                = "xxxxxxxxxxxxxxxxxxxx"
 service_account_key_file = "~/yc/key.json"
 private_key_path         = "~/.ssh/id_rsa"
-#
