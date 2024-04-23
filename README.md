@@ -37,4 +37,6 @@ testapp_port = 9292
 Создан variables.tf с описанием переменных
 
 hw7
+
 hw8
+
