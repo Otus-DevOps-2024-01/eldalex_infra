@@ -1,0 +1,28 @@
+---
+- name: Настройка приложения
+  hosts: app
+  become: true
+  vars:
+    db_host: 158.160.52.56
+  tasks:
+    - name: Добавление unit-файла для Puma
+      ansible.builtin.copy:
+        src: files/puma.service
+        dest: /etc/systemd/system/puma.service
+      notify: reload puma
+
+    - name: Добавление конфигурации для подключения к базе данных
+      ansible.builtin.template:
+        src: templates/db_config.j2
+        dest: /home/ubuntu/db_config
+
+    - name: Включение сервиса Puma
+      ansible.builtin.systemd:
+        name: puma
+        enabled: yes
+
+  handlers:
+    - name: reload puma
+      ansible.builtin.service:
+        name: puma
+        state: restarted
