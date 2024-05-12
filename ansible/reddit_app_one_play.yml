@@ -10,30 +10,26 @@
       ansible.builtin.template:
         src: templates/mongod.conf.j2
         dest: /etc/mongod.conf
-        mode: 0644
+        mode: 644
       tags: db-tag
       notify: restart mongod
-
     - name: Fetch the latest version of application code
       git:
-        repo: 'https://github.com/express42/reddit.git'
+        repo: https://github.com/express42/reddit.git
         dest: /home/ubuntu/reddit
         version: monolith
       tags: deploy-tag
       notify: reload puma
-
     - name: Bundle install
       bundler:
         state: present
         chdir: /home/ubuntu/reddit
       tags: deploy-tag
-
     - name: Add config for DB connection
       ansible.builtin.template:
         src: templates/db_config.j2
         dest: /home/ubuntu/db_config
       tags: app-tag
-
     - name: Add unit file for Puma
       become: true
       copy:
@@ -41,19 +37,16 @@
         dest: /etc/systemd/system/puma.service
       tags: app-tag
       notify: reload puma
-
     - name: enable puma
       become: true
       systemd: name=puma enabled=yes
       tags: app-tag
-
   handlers:
     - name: restart mongod
       become: true
       ansible.builtin.service:
         name: mongod
         state: restarted
-
     - name: reload puma
       become: true
       ansible.builtin.service:

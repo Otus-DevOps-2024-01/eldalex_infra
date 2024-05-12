@@ -9,9 +9,8 @@
       ansible.builtin.template:
         src: templates/mongod.conf.j2
         dest: /etc/mongod.conf
-        mode: '0644'
+        mode: "0644"
       notify: reload mongod
-
   handlers:
     - name: reload mongod
       ansible.builtin.service:
