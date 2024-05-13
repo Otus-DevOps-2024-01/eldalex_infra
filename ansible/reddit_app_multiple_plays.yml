@@ -1,0 +1,70 @@
+---
+- name: Config MongoDB
+  hosts: db
+  tags: db-tag
+  become: true
+  vars:
+    mongo_bind_ip: 0.0.0.0
+  tasks:
+    - name: Configfile MongoDB
+      ansible.builtin.template:
+        src: templates/mongod.conf.j2
+        dest: /etc/mongod.conf
+        mode: "0644"
+      notify: reload mongod
+  handlers:
+    - name: reload mongod
+      ansible.builtin.service:
+        name: mongod
+        state: restarted
+- name: Config Application
+  hosts: app
+  tags: app-tag
+  become: true
+  vars:
+    db_host: 158.160.108.23
+  tasks:
+    - name: Add unit-file for Puma
+      ansible.builtin.copy:
+        src: files/puma.service
+        dest: /etc/systemd/system/puma.service
+      notify: reload puma
+    - name: Add config for database
+      ansible.builtin.template:
+        src: templates/db_config.j2
+        dest: /home/ubuntu/db_config
+    - name: Enable Puma
+      ansible.builtin.systemd:
+        name: puma
+        enabled: yes
+  handlers:
+    - name: reload puma
+      ansible.builtin.service:
+        name: puma
+        state: restarted
+- name: Deploy app
+  hosts: app
+  tags: deploy-tag
+  become: true
+  vars:
+    db_host: 158.160.108.23
+  tasks:
+    - name: install git
+      ansible.builtin.apt:
+        name: git
+        state: present
+    - name: Fetch the latest version of application code
+      ansible.builtin.git:
+        repo: https://github.com/express42/reddit.git
+        dest: /home/ubuntu/reddit
+        version: monolith
+      notify: reload puma
+    - name: Bundle install
+      ansible.builtin.bundler:
+        state: present
+        chdir: /home/ubuntu/reddit
+  handlers:
+    - name: reload puma
+      ansible.builtin.service:
+        name: puma
+        state: restarted
