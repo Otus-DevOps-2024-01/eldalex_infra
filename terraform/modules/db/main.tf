@@ -1,11 +1,11 @@
-#terraform {
-#  required_providers {
-#    yandex = {
-#      source = "yandex-cloud/yandex"
-#    }
-#  }
-#  required_version = ">= 0.13"
-#}
+terraform {
+  required_providers {
+    yandex = {
+      source = "yandex-cloud/yandex"
+    }
+  }
+  required_version = ">= 0.13"
+}
 
 resource "yandex_compute_instance" "db" {
   name     = "reddit-db"
@@ -14,6 +14,7 @@ resource "yandex_compute_instance" "db" {
   }
 
   resources {
+    core_fraction = 20
     cores  = 2
     memory = 2
   }
