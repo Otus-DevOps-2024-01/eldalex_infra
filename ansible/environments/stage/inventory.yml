@@ -1,8 +1,8 @@
 app:
   hosts:
     reddit-app:
-      ansible_host: 158.160.120.3
+      ansible_host: 10.10.10.20
 db:
   hosts:
     reddit-db:
-      ansible_host: 158.160.118.107
+      ansible_host: 10.10.10.10
