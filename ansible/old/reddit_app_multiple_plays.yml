@@ -22,7 +22,7 @@
   tags: app-tag
   become: true
   vars:
-    db_host: 158.160.108.23
+    db_host: 178.154.231.0
   tasks:
     - name: Add unit-file for Puma
       ansible.builtin.copy:
@@ -47,7 +47,7 @@
   tags: deploy-tag
   become: true
   vars:
-    db_host: 158.160.108.23
+    db_host: 178.154.231.0
   tasks:
     - name: install git
       ansible.builtin.apt:

@@ -1,0 +1,6 @@
+---
+# handlers file for db
+- name: reload mongod
+  ansible.builtin.service:
+    name: mongod
+    state: restarted
