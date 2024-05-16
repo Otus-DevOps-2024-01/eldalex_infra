@@ -4,18 +4,5 @@
   debug:
     msg: "This host is in {{ env }} environment!!!"
 
-- name: Add unit-file for Puma
-  ansible.builtin.copy:
-    src: puma.service
-    dest: /etc/systemd/system/puma.service
-  notify: reload puma
-
-- name: Add config for database
-  ansible.builtin.template:
-    src: db_config.j2
-    dest: /home/ubuntu/db_config
-
-- name: Enable Puma
-  ansible.builtin.systemd:
-    name: puma
-    enabled: yes
+- include_tasks: ruby.yml
+- include_tasks: puma.yml
