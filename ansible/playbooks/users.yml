@@ -1,4 +1,4 @@
-----
+---
 - name: Create users
   hosts: all
   become: true
